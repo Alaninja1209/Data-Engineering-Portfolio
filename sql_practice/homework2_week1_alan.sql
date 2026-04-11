@@ -85,7 +85,52 @@ Where Year(ood.order_delivered_customer_date) in (2017, 2018)
 Group By Year(ood.order_delivered_customer_date), Month(ood.order_delivered_customer_date)
 
 -- Question 10
+Select Top 1 opd.product_category_name,
+	ooid.seller_id,
+	Rank() Over (Partition By ooid.seller_id Order By Count(opd.product_id) Desc) As seller_ranks
+From olist_products_dataset opd
+Inner Join olist_order_items_dataset ooid 
+On ooid.product_id = opd.product_id 
+Group By opd.product_category_name, ooid.seller_id 
 
 -- Question 11
+With total_revenue_orders As (
+	Select Round(Sum(ooid.price), 2) As 'Total Revenue',
+		Count(ooid.order_id) As 'Total Orders',
+		osd.seller_id As 'Seller'
+	From olist_order_items_dataset ooid
+	Inner Join olist_sellers_dataset osd 
+	On osd.seller_id = ooid.seller_id 
+	Group By osd.seller_id 
+)
+Select "Total Revenue",
+	"Total Orders",
+	"Seller"
+From total_revenue_orders 
 
 -- Question 12
+With average_review_score As (
+	Select Avg(oord.review_score) As Score_Grade,
+		ocd.customer_state As state
+	From olist_order_reviews_dataset oord 
+	Inner Join olist_orders_dataset ood 
+	On ood.order_id = oord.order_id 
+	Inner Join olist_customers_dataset ocd 
+	On ocd.customer_id = ood.customer_id 
+	Group By ocd.customer_state 
+),
+average_delivery_time As (
+	Select Datediff(day, ood.order_approved_at, ood.order_delivered_customer_date) As Average_Delivery_Days,
+		ocd.customer_state As state
+	From olist_orders_dataset ood 
+	Inner join olist_customers_dataset ocd 
+	On ocd.customer_id = ood.customer_id 
+	Group By ocd.customer_state, ood.order_approved_at, ood.order_delivered_customer_date
+)
+Select average_delivery_time.Average_Delivery_Days,
+	average_review_score.Score_Grade,
+	average_delivery_time.state
+From average_delivery_time 
+Inner Join average_review_score 
+On average_review_score.state = average_delivery_time.state 
+Where average_delivery_time.Average_Delivery_Days < 10 Or average_review_score.Score_Grade > 4
