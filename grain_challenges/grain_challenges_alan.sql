@@ -1,4 +1,4 @@
--- Question 1
+-- Challenge 1 - E-commerce Order System (Olist)
 
 -- Grain of Fact: One row per order line, goods atomic transfer
 -- Dimensional tables: Seller, Date, Customer, Product
@@ -33,7 +33,7 @@ From BRAZILSHOP_DW.DEV.FCT_ORDERS
 Group By customer, product_category, state
 Having Count(customer) > 1
 
--- Question 2
+-- Challenge 2 - Ride Hailing (Think Uber)
 
 -- Grain of fact: One row per trip leg
 -- Dimensional tables: Driver, Location, Date, Passenger
@@ -43,7 +43,7 @@ Having Count(customer) > 1
 -- it isn't what our client ask, besides revenue and quantity of trips done they want to see how many
 -- of them ended in the morning or night besides the average duration in each city.
 
--- Question 3
+-- Challenge 3 - Hotel Booking (Booking.com)
 -- Grain of fact: One row per reservation night
 -- Dimensional tables: 
 -- Fact Table: Clients, Reservations, Hotel
@@ -71,3 +71,18 @@ Select
     Month(arrival) As arrival_month
 From Hotel_Booking.Dev.fct_revenue_per_night
 Group By client
+
+-- Challenge 5 - Healthcare (Think Hospital System)
+
+-- Fact tables: fct_treatments, fct_stay, fct_bed_occupancy
+-- fct_treatments -> One row per treatment
+-- fct_stay -> One row per patient
+-- fct_bed_occupancy -> One row per ward
+
+-- Dimensional Tables: Wards, Revenue, Patients
+
+-- Columns for fct_treatments -> patient_id, doctor_id, revenue, treatment, sickness, alergies
+
+-- Too maintain Data Integrety, it is not recommended to megre everything in one column due to
+-- architectural design. Combining everything could cause a lot of missing values, running
+-- queries in Snowflake could take too long and more difficult to clean the data
