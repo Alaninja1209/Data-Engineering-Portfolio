@@ -56,7 +56,7 @@ With fct_reservations As (
         h.total_rooms,
         h.price_per_night,
         g.guest_id,
-        g.reservation,
+        g.reservation_date As reservation,
         g.check_in_date,
         g.check_out_date,
         datediff('day', g.check_in_date, g.check_out_date) As Days_Of_Stay
