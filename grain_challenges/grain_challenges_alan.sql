@@ -76,6 +76,42 @@ Select
 From fct_reservations
 Group By hotel_id, Month(reservation), Week(Days_Of_Stay)
 
+-- Challenge 4 - Saas Product (Thinks Slack or Notion)
+-- Dimensional tables -> Features, Users
+-- Fact Tables -> Sessions, events (Two tables, different things)
+-- Sessions -> One row per log in
+-- Events -> One row per event or feature used
+
+With fct_sessions As (
+    Select 
+        user_id,
+        user_company,
+        user_sign_up As Sign_Up,
+        user_last_sign_in As Last_Sign_In,
+        current_date() As today
+    From Users 
+)
+
+With fct_events As (
+    Select 
+        event_id,
+        session_id,
+        user_id,
+        event_type,
+        event_date_key,
+        feature_area
+    From Features
+)
+
+Select 
+    user_id,
+    Last_Sign_In,
+    today,
+    datediff('day', Last_Sign_In, today) As Days_Inactive
+From fct_sessions
+Where Days_Inactive >= 14
+Order By Days_Inactive Desc
+
 -- Challenge 5 - Healthcare (Think Hospital System)
 
 -- Fact tables: fct_treatments, fct_stay, fct_bed_occupancy
