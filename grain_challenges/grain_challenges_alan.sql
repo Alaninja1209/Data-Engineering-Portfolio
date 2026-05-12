@@ -126,3 +126,31 @@ Order By Days_Inactive Desc
 -- Too maintain Data Integrety, it is not recommended to megre everything in one column due to
 -- architectural design. Combining everything could cause a lot of missing values, running
 -- queries in Snowflake could take too long and more difficult to clean the data
+
+-- Challenge 6 - Retail Bank (Think Chase or Barclays)
+-- Fact tables: 
+-- fct_daily_balance: One row per daily balance -> Periodic Snapshot Type
+-- fct_account_lifecycle: One row per account -> Accumulating Snapshot
+-- fct_transactions: One row per transactions -> Transaction Type
+-- Columns for Dim Account: account_id, customer_id, account_type, account_status, snapshot_day, credit_limit, interest rate
+
+-- Query to find whose balance dropped below zero in the last 30 days
+
+Select 
+    db.account_id,
+    db.customer_name,
+    Min(db.lowest_balance_day) As lowest_balance,
+    Min(db.balance_date) As date_of_lowest_balance,
+    al.is_current
+From fct_daily_balance db
+Inner Join fct_account_lifecycle al
+On al.account_id = db.account_id
+Where Min(db.balance_date) >= dateadd('day', -30, CURRENT_DATE)
+    and db.lowest_balance_day < 0 and al.is_current
+Order By lowest_balance Desc
+
+-- Challenge 7 - Food Delivery (Think DoorDash or Uber Eats)
+-- Primary Fact Table Grain: One row per order
+-- Dimensional Location is the dimension hiding, there are different locations that we must consider
+-- when the food was made, from where is being sent and when the drive received the request to
+-- deliver the food
