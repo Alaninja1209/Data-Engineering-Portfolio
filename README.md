@@ -1,7 +1,7 @@
 # Data-Engineering-Portfolio
-This repository contains my personal portfolio in my journey to become a Data Engineer. 
+This portfolio showcases the projects and architectural challenges I have built throughout my journey toward becoming a Data Engineer.
 
-## 📌 Description and projects
+## 📌 Description and Projects
 The primary objective of this repository is to master the core tools and methodologies essential to Data Engineering, specifically focusing on **Data Modeling**, **dbt (Data Build Tool)**, and **Cloud Infrastructure**. Utilizing the `Brazil E-commerce Workshop` database, the projects contained here are designed to systematically build and validate these production-level skills.
 
 ## 🏋️‍♂️ Challenges and Practice
@@ -19,7 +19,5 @@ Conversely, the Grand Challenges transition into advanced data modeling, tacklin
 Before getting our hands dirty, make sure to have the next requirements:
 
 - Install a Python version above 13.3.0, and the following libraries: Numpy, Anthropic, Pandas, Matplotlib, Requests, Sqlalchemy
-
 - It's necessary to create a key in Claude Console, **Don't push your key**
-
 - **Snowflake** and **AWS** account to perform a complete data pipeline
