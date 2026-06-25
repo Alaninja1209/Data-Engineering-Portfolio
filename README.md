@@ -15,6 +15,11 @@ Conversely, the Grand Challenges transition into advanced data modeling, tacklin
 
 **Note**: Due to environment-specific limitations in Snowflake, Common Table Expressions (CTEs) are utilized inline to mock and represent Dimension tables rather than instantiating them as physical DDL schemas.
 
+## 🎓 Capstone Project - NYC TaxiFlow
+As the capstone project of this Data Engineering Masterclass, we will build a complete production-grade data platform from scratch, applying the concepts, tools, and best practices covered throughout the program.
+
+**Business Case**: As a Data Engineer at an NYC transportation analytics company, our mission is to build a production-grade data platform that automatically ingests transportation data, transforms it into a clean and analytics-ready data warehouse, streams real-time dispatch events, and delivers AI-powered insights to support business decision-making.
+
 ## 🚀 Getting started, requirements before starting
 Before getting our hands dirty, make sure to have the next requirements:
 
